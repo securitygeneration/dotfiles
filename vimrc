@@ -26,9 +26,14 @@ call plug#begin()
 	Plug 'jeffkreeftmeijer/vim-numbertoggle'
 	Plug 'scrooloose/nerdtree'
 	Plug 'yegappan/mru'
+	Plug 'kien/ctrlp.vim'
+	Plug 'tpope/vim-surround'
+	Plug 'vim-syntastic/syntastic'
+	Plug 'Lokaltog/vim-easymotion'
 	" Themes
 	Plug 'croaker/mustang-vim'
 	Plug 'altercation/vim-colors-solarized'
+	Plug 'tomasr/molokai'
 call plug#end()
 
 " With a map leader it's possible to do extra key combinations
@@ -87,7 +92,7 @@ endif
 " => Colors and Fonts
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Enable syntax highlighting
-syntax enable 
+syntax enable
 
 " Set theme
 if has("gui_running")
@@ -98,8 +103,30 @@ else
   colorscheme mustang
 endif
 
+" Highlight the current line
+set cursorline
+hi CursorLine term=bold cterm=bold
+
 " Use system clipboard
-set clipboard=unnamedplus
+if has('clipboard')
+    if has('unnamedplus')  " When possible use + register for copy-paste
+        set clipboard=unnamed,unnamedplus
+    else         " On mac and Windows, use * register for copy-paste
+        set clipboard=unnamed
+    endif
+endif
+
+" TODO: Configure fonts
+"if has('gui_running')
+"if LINUX() && has("gui_running")
+"    set guifont=Andale\ Mono\ Regular\ 12,Menlo\ Regular\ 11,Consolas\ Regular\ 12,Courier\ New\ Regular\ 14
+"elseif OSX() && has("gui_running")
+"    set guifont=Andale\ Mono\ Regular:h12,Menlo\ Regular:h11,Consolas\ Regular:h12,Courier\ New\ Regular:h14
+"elseif WINDOWS() && has("gui_running")
+"    set guifont=Andale_Mono:h10,Menlo:h10,Consolas:h10,Courier_New:h10
+"endif
+"endif
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Movement/editing mappings
@@ -156,3 +183,17 @@ end
 
 " <Ctrl-l> redraws the screen and removes any search highlighting.
 nnoremap <silent> <C-l> :nohl<CR><C-l>
+
+
+" For when you forget to sudo.. Really Write the file.
+cmap w!! w !sudo tee % >/dev/null
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Plugin-specific settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Syntastic settings
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_error_symbol = "✗"
+let g:syntastic_sh_checkers = ['shellcheck']
