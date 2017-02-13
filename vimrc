@@ -1,4 +1,4 @@
-" VIM Configuration 
+" VIM Configuration
 " SJ - 7 Feb 2017
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -30,6 +30,7 @@ call plug#begin()
 	Plug 'tpope/vim-surround'
 	Plug 'vim-syntastic/syntastic'
 	Plug 'Lokaltog/vim-easymotion'
+	Plug 'vim-repeat'
 	" Themes
 	Plug 'croaker/mustang-vim'
 	Plug 'altercation/vim-colors-solarized'
@@ -41,7 +42,7 @@ let mapleader = ","
 let g:mapleader = ","
 
 " Fast saving
-nmap <leader>w :w!<cr>
+"nmap <leader>w :w!<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
@@ -185,16 +186,25 @@ end
 " <Ctrl-l> redraws the screen and removes any search highlighting.
 nnoremap <silent> <C-l> :nohl<CR><C-l>
 
-
 " For when you forget to sudo.. Really Write the file.
 cmap w!! w !sudo tee % >/dev/null
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Plugin-specific settings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Syntastic settings
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_error_symbol = "✗"
 let g:syntastic_sh_checkers = ['shellcheck']
+
+" Easymotion settings
+"nmap w <Plug>(easymotion-sn) 
+
+map <Leader>l <Plug>(easymotion-lineforward)
+map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)
+map <Leader>h <Plug>(easymotion-linebackward)
+
+let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
