@@ -1,5 +1,5 @@
 " VIM Configuration
-" SJ - 7 Feb 2017
+" SJ - 14 Feb 2017
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
@@ -37,12 +37,6 @@ call plug#begin()
 	Plug 'tomasr/molokai'
 call plug#end()
 
-" With a map leader it's possible to do extra key combinations
-let mapleader = ","
-let g:mapleader = ","
-
-" Fast saving
-"nmap <leader>w :w!<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
@@ -133,6 +127,17 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Movement/editing mappings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" With a map leader it's possible to do extra key combinations
+let mapleader = ","
+let g:mapleader = ","
+
+" Fast saving
+nmap <leader>w :w!<cr>
+
+" For when you forget to sudo.. Really Write the file.
+cmap w!! w !sudo tee % >/dev/null
+
 " Disabling directional keys
 map <up> <nop>
 map <down> <nop>
@@ -163,48 +168,50 @@ nnoremap <CR> o<Esc>k
 "   Mappings below are simpler, but can't be repeated with '.'
 "    nnoremap <leader>i i_<Esc>r
 "    nnoremap <leader>a a_<Esc>r
-function! <SID>InsertChar(char, count)
-  return repeat(a:char, a:count)
-endfunction
-
-nnoremap <silent> <Plug>InsertChar :<C-U>exec "normal i".<SID>InsertChar(nr2char(getchar()), v:count1)<CR>
-
-if !exists('g:insert_char_no_default_mapping') || (g:insert_char_no_default_mapping == 0)
-  nmap <leader>i <Plug>InsertChar
-end
-
-function! <SID>AppendChar(char, count)
-  return repeat(a:char, a:count)
-endfunction
-
-nnoremap <silent> <Plug>AppendChar :<C-U>exec "normal a".<SID>AppendChar(nr2char(getchar()), v:count1)<CR>
-
-if !exists('g:append_char_no_default_mapping') || (g:append_char_no_default_mapping == 0)
-  nmap <leader>a <Plug>AppendChar
-end
+	function! <SID>InsertChar(char, count)
+	  return repeat(a:char, a:count)
+	endfunction
+	
+	nnoremap <silent> <Plug>InsertChar :<C-U>exec "normal i".<SID>InsertChar(nr2char(getchar()), v:count1)<CR>
+	
+	if !exists('g:insert_char_no_default_mapping') || (g:insert_char_no_default_mapping == 0)
+	  nmap <leader>i <Plug>InsertChar
+	end
+	
+	function! <SID>AppendChar(char, count)
+	  return repeat(a:char, a:count)
+	endfunction
+	
+	nnoremap <silent> <Plug>AppendChar :<C-U>exec "normal a".<SID>AppendChar(nr2char(getchar()), v:count1)<CR>
+	
+	if !exists('g:append_char_no_default_mapping') || (g:append_char_no_default_mapping == 0)
+	  nmap <leader>a <Plug>AppendChar
+	end
 
 " <Ctrl-l> redraws the screen and removes any search highlighting.
 nnoremap <silent> <C-l> :nohl<CR><C-l>
-
-" For when you forget to sudo.. Really Write the file.
-cmap w!! w !sudo tee % >/dev/null
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Plugin-specific settings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Syntastic settings
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_error_symbol = "✗"
-let g:syntastic_sh_checkers = ['shellcheck']
+ let g:syntastic_always_populate_loc_list = 1
+ let g:syntastic_check_on_open = 1
+ let g:syntastic_error_symbol = "✗"
+ let g:syntastic_sh_checkers = ['shellcheck']
 
 " Easymotion settings
-"nmap w <Plug>(easymotion-sn) 
+ " change ,,w to forward & backward
+ nmap <Leader><Leader>w <Plug>(easymotion-bd-w)
+ " forward in current line only
+ map <Leader>l <Plug>(easymotion-lineforward)
+ " down column only
+ map <Leader>j <Plug>(easymotion-j)
+ " up column only
+ map <Leader>k <Plug>(easymotion-k)
+ " backward in line only
+ map <Leader>h <Plug>(easymotion-linebackward)
+ " keep cursor column when JK motion
+ let g:EasyMotion_startofline = 0
 
-map <Leader>l <Plug>(easymotion-lineforward)
-map <Leader>j <Plug>(easymotion-j)
-map <Leader>k <Plug>(easymotion-k)
-map <Leader>h <Plug>(easymotion-linebackward)
-
-let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
