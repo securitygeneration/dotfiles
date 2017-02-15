@@ -46,9 +46,10 @@ silent! call plug#begin()
 	Plug 'raimondi/delimitmate'		 " auto-adds closing quote/brackets
 	Plug 'nathanaelkane/vim-indent-guides'	 " visual indentation guides (<Leader>ig)
 	" Themes
-	Plug 'altercation/vim-colors-solarized'
-	Plug 'croaker/mustang-vim'
-	Plug 'tomasr/molokai'
+	" Plug 'altercation/vim-colors-solarized'
+	" Plug 'croaker/mustang-vim'
+	" Plug 'tomasr/molokai'
+	Plug 'flazz/vim-colorschemes'		 " mass-load color schemes
 call plug#end()
 
 " vim-airline needs this
@@ -213,8 +214,8 @@ nnoremap <leader>w :w!<cr>
 cmap w!! w !sudo tee % >/dev/null
 
 " See a diff of your unsaved changes
-" *nix only (requires diff)
-command Diff w !diff % -
+" *nix-only (requires diff)
+command! Diff w !diff % -
 
 " Disabling directional keys
 map <up> <nop>
