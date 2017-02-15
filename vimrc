@@ -38,7 +38,7 @@ silent! call plug#begin()
 	Plug 'kien/ctrlp.vim'			 " fuzzy file/buffer/* finder
 	Plug 'vim-syntastic/syntastic'		 " syntax checker
 	Plug 'Lokaltog/vim-easymotion'		 " easy jumping around the screen
-	" Plug 'vim-airline/vim-airline'		 " custom tab bar and baseline
+	Plug 'vim-airline/vim-airline'		 " custom tab bar and baseline
 	Plug 'tpope/vim-surround'		 " easy add/remov/chang/ing of surrounding brackets/tags
 	Plug 'tpope/vim-repeat'			 " adds '.' repeat support for plugins
 	Plug 'tpope/vim-commentary'		 " easy commenting
