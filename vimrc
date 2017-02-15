@@ -53,7 +53,7 @@ silent! call plug#begin()
 call plug#end()
 
 " enable the moose!
-set mouse=a
+" set mouse=a
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
@@ -182,6 +182,9 @@ endif
 let mapleader = ","
 let g:mapleader = ","
 
+" Map ; to : for even moar efficiency!
+nnoremap ; :
+
 " Buffer navigation
 nnoremap <C-S-tab> :bprevious<CR>
 nnoremap <leader>H :bprevious<CR>
@@ -202,9 +205,11 @@ nnoremap <leader>9 :b9<CR>
 nnoremap <leader>v <C-w>v<C-w>l
 nnoremap <leader>s <C-w>s
 
-" Tab (window layout) navigation
-" nnoremap <leader>HH :tabp<CR>
-" nnoremap <leader>LL :tabn<CR>
+" Easy window navigation
+map <C-h> <C-w>h
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-l> <C-w>l
 
 " Fast saving
 nnoremap <leader>w :w!<cr>
@@ -226,6 +231,10 @@ imap <up> <nop>
 imap <down> <nop>
 imap <left> <nop>
 imap <right> <nop>
+
+" Avoid jumping over wrapped lines when going up and down
+nnoremap j gj
+nnoremap k gk
 
 " Map jk to Esc
 imap jk <Esc>
@@ -266,8 +275,8 @@ if !exists('g:append_char_no_default_mapping') || (g:append_char_no_default_mapp
 	nmap <leader>a <Plug>AppendChar
 end
 
-" <Ctrl-l> redraws the screen and removes any search highlighting.
-nnoremap <silent> <C-l> :nohl<CR><C-l>
+" ,/ redraws the screen and removes any search highlighting.
+nnoremap <silent> ,/ :nohlsearch<CR>
 
 " Quickly edit/reload the vimrc file
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
