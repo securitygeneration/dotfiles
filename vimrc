@@ -52,10 +52,6 @@ silent! call plug#begin()
 	Plug 'flazz/vim-colorschemes'		 " mass-load color schemes
 call plug#end()
 
-" vim-airline needs this
-set laststatus=2
-
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -299,3 +295,4 @@ let g:EasyMotion_startofline = 0
 
 " Airplane settings
 let g:airline#extensions#tabline#enabled = 1
+set laststatus=2
