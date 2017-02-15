@@ -8,20 +8,27 @@
 " to enjoy the features of Vim
 set nocompatible
 
-" Load Pathogen - removed in favour of vim-plug below.
-"execute pathogen#infect()
-
-" Auto-install vim-plug if not installed
+ Auto-install vim-plug if not installed
 if has('unix') || has('macunix')
 	if empty(glob('~/.vim/autoload/plug.vim'))
-	  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+		silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
 	    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-	  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+	  silent autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+	endif
+elseif has('win32')
+	set shell=powershell
+	set shellcmdflag=-command
+	if empty(glob($VIMRUNTIME."\\autoload\\plug.vim"))
+		if empty(glob($VIMRUNTIME."\\autoload"))
+			silent execute "!md ".$VIMRUNTIME."\\autoload"
+		endif
+		silent execute "!$uri = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim';(New-Object Net.WebClient).DownloadFile($uri, $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath('".$VIMRUNTIME."\\autoload\\plug.vim'))"
+		autocmd VimEnter * PlugInstall --sync
 	endif
 endif
 
-" Load vim-plug and plugins and themes
-call plug#begin()
+" Load vim-plug, plugins and themes
+silent! call plug#begin()
 	" Plugins
 	Plug 'jeffkreeftmeijer/vim-numbertoggle'
 	Plug 'scrooloose/nerdtree'
