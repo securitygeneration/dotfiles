@@ -84,19 +84,46 @@ endif
 " Enable wildmenu
 set wildmenu
 
+" Set window size
+if has("gui_running")
+  " GUI is running or is about to start.
+  " Maximize gvim window (for an alternative on Windows, see simalt below).
+  set lines=999 columns=150
+else
+  " This is console Vim.
+  if exists("+lines")
+    set lines=50
+  endif
+  if exists("+columns")
+    set columns=100
+  endif
+endif
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Fonts
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Enable syntax highlighting
 syntax enable
 
-" Set theme
+" Set theme - solarized > mustang > desert
 if has("gui_running")
   set t_Co=256
   set background=dark
-  colorscheme solarized
+  try
+	  silent! colorscheme solarized
+  catch /^Vim\%((\a\+)\)\=:E185/
+	  try
+		  colorscheme mustang
+	  catch /^Vim\%((\a\+)\)\=:E185/
+		  silent! colorscheme desert
+	  endtry
+  endtry
 else
-  colorscheme mustang
+	try
+		colorscheme mustang
+	catch /^Vim\%((\a\+)\)\=:E185/
+		silent! colorscheme desert 
+	endtry
 endif
 
 " Highlight the current line
