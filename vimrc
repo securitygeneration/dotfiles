@@ -12,10 +12,12 @@ set nocompatible
 if has('unix') || has('macunix')
 	if empty(glob('~/.vim/autoload/plug.vim'))
 		silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-	    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-	  silent autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+					\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+		silent autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 	endif
 elseif has('win32')
+	" Auto-install for Windows
+	" Use with caution as this is configured for my portable gVim
 	set shell=powershell
 	set shellcmdflag=-command
 	if empty(glob($VIMRUNTIME."\\autoload\\plug.vim"))
@@ -30,20 +32,27 @@ endif
 " Load vim-plug, plugins and themes
 silent! call plug#begin()
 	" Plugins
-	Plug 'jeffkreeftmeijer/vim-numbertoggle'
-	Plug 'scrooloose/nerdtree'
-	Plug 'yegappan/mru'
-	Plug 'kien/ctrlp.vim'
-	Plug 'tpope/vim-surround'
-	Plug 'vim-syntastic/syntastic'
-	Plug 'Lokaltog/vim-easymotion'
-	Plug 'vim-airline/vim-airline'
-	Plug 'tpope/vim-repeat'
+	Plug 'jeffkreeftmeijer/vim-numbertoggle' " enables relative numbering - Ctrl-N toggles
+	Plug 'scrooloose/nerdtree'	 	 " visual file tree
+	Plug 'yegappan/mru'			 " recently used files
+	Plug 'kien/ctrlp.vim'			 " fuzzy file/buffer/* finder
+	Plug 'vim-syntastic/syntastic'		 " syntax checker
+	Plug 'Lokaltog/vim-easymotion'		 " easy jumping around the screen
+	Plug 'vim-airline/vim-airline'		 " custom tab bar and baseline
+	Plug 'tpope/vim-surround'		 " easy add/remov/chang/ing of surrounding brackets/tags
+	Plug 'tpope/vim-repeat'			 " adds '.' repeat support for plugins
+	Plug 'tpope/vim-commentary'		 " easy commenting
+	Plug 'tpope/vim-endwise'		 " auto-adds closing tags (e.g. endif, etc)
+	Plug 'raimondi/delimitmate'		 " auto-adds closing quote/brackets
+	Plug 'nathanaelkane/vim-indent-guides'	 " visual indentation guides (<Leader>ig)
 	" Themes
-	Plug 'croaker/mustang-vim'
 	Plug 'altercation/vim-colors-solarized'
+	Plug 'croaker/mustang-vim'
 	Plug 'tomasr/molokai'
 call plug#end()
+
+" vim-airline needs this
+set laststatus=2
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -62,19 +71,19 @@ set ruler                 " Display cursor position
 set wrap                  " Wrap lines when they are too long
 
 set scrolloff=3           " Display at least 3 lines around you cursor
-                          " (for scrolling)
+" (for scrolling)
 
 set guioptions=T          " Enable the toolbar
 
 " -- Search
 set ignorecase            " Ignore case when searching
 set smartcase             " If there is an uppercase in your search term
-                          " search case sensitive again
+" search case sensitive again
 set incsearch             " Highlight search results when typing
 set hlsearch              " Highlight search results
 
 " -- Beep
-set visualbell            " Prevent Vim from beeping  
+set visualbell            " Prevent Vim from beeping
 set noerrorbells          " Prevent Vim from beeping
 
 " Backspace behaves as expected
@@ -86,7 +95,7 @@ set hidden
 
 " Properly disable sound on errors on MacVim
 if has("gui_macvim")
-    autocmd GUIEnter * set vb t_vb=
+	autocmd GUIEnter * set vb t_vb=
 endif
 
 " Enable wildmenu
@@ -94,18 +103,24 @@ set wildmenu
 
 " Set window size
 if has("gui_running")
-  " GUI is running or is about to start.
-  " Maximize gvim window (for an alternative on Windows, see simalt below).
-  set lines=999 columns=150
+	" GUI is running or is about to start.
+	" Maximize gvim window (for an alternative on Windows, see simalt below).
+	set lines=999 columns=150
 else
-  " This is console Vim.
-  if exists("+lines")
-    set lines=50
-  endif
-  if exists("+columns")
-    set columns=100
-  endif
+	" This is console Vim.
+	if exists("+lines")
+		set lines=50
+	endif
+	if exists("+columns")
+		set columns=100
+	endif
 endif
+
+" Enable lazyredraw to speed up scrolling
+set lazyredraw
+
+" Autoindent to match adjacent lines
+set autoindent
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Fonts
@@ -115,22 +130,22 @@ syntax enable
 
 " Set theme - solarized > mustang > desert
 if has("gui_running")
-  set t_Co=256
-  set background=dark
-  try
-	  silent! colorscheme solarized
-  catch /^Vim\%((\a\+)\)\=:E185/
-	  try
-		  colorscheme mustang
-	  catch /^Vim\%((\a\+)\)\=:E185/
-		  silent! colorscheme desert
-	  endtry
-  endtry
+	set t_Co=256
+	set background=dark
+	try
+		silent! colorscheme solarized
+	catch /^Vim\%((\a\+)\)\=:E185/
+		try
+			colorscheme mustang
+		catch /^Vim\%((\a\+)\)\=:E185/
+			silent! colorscheme desert
+		endtry
+	endtry
 else
 	try
 		colorscheme mustang
 	catch /^Vim\%((\a\+)\)\=:E185/
-		silent! colorscheme desert 
+		silent! colorscheme desert
 	endtry
 endif
 
@@ -140,11 +155,11 @@ hi CursorLine term=bold cterm=bold
 
 " Use system clipboard
 if has('clipboard')
-    if has('unnamedplus')  " When possible use + register for copy-paste
-        set clipboard=unnamed,unnamedplus
-    else         " On mac and Windows, use * register for copy-paste
-        set clipboard=unnamed
-    endif
+	if has('unnamedplus')  " When possible use + register for copy-paste
+		set clipboard=unnamed,unnamedplus
+	else         " On mac and Windows, use * register for copy-paste
+		set clipboard=unnamed
+	endif
 endif
 
 " TODO: Configure fonts
@@ -167,11 +182,39 @@ endif
 let mapleader = ","
 let g:mapleader = ","
 
+" Buffer navigation
+nnoremap <C-S-tab> :bprevious<CR>
+nnoremap <leader>H :bprevious<CR>
+nnoremap <C-tab>   :bnext<CR>
+nnoremap <leader>L :bnext<CR>
+
+nnoremap <leader>1 :b1<CR>
+nnoremap <leader>2 :b2<CR>
+nnoremap <leader>3 :b3<CR>
+nnoremap <leader>4 :b4<CR>
+nnoremap <leader>5 :b5<CR>
+nnoremap <leader>6 :b6<CR>
+nnoremap <leader>7 :b7<CR>
+nnoremap <leader>8 :b8<CR>
+nnoremap <leader>9 :b9<CR>
+
+" Window splitting
+nnoremap <leader>v <C-w>v<C-w>l
+nnoremap <leader>s <C-w>s
+
+" Tab (window layout) navigation
+" nnoremap <leader>HH :tabp<CR>
+" nnoremap <leader>LL :tabn<CR>
+
 " Fast saving
-nmap <leader>w :w!<cr>
+nnoremap <leader>w :w!<cr>
 
 " For when you forget to sudo.. Really Write the file.
 cmap w!! w !sudo tee % >/dev/null
+
+" See a diff of your unsaved changes
+" *nix only (requires diff)
+command Diff w !diff % -
 
 " Disabling directional keys
 map <up> <nop>
@@ -203,25 +246,25 @@ nnoremap <CR> o<Esc>k
 "   Mappings below are simpler, but can't be repeated with '.'
 "    nnoremap <leader>i i_<Esc>r
 "    nnoremap <leader>a a_<Esc>r
-	function! <SID>InsertChar(char, count)
-	  return repeat(a:char, a:count)
-	endfunction
-	
-	nnoremap <silent> <Plug>InsertChar :<C-U>exec "normal i".<SID>InsertChar(nr2char(getchar()), v:count1)<CR>
-	
-	if !exists('g:insert_char_no_default_mapping') || (g:insert_char_no_default_mapping == 0)
-	  nmap <leader>i <Plug>InsertChar
-	end
-	
-	function! <SID>AppendChar(char, count)
-	  return repeat(a:char, a:count)
-	endfunction
-	
-	nnoremap <silent> <Plug>AppendChar :<C-U>exec "normal a".<SID>AppendChar(nr2char(getchar()), v:count1)<CR>
-	
-	if !exists('g:append_char_no_default_mapping') || (g:append_char_no_default_mapping == 0)
-	  nmap <leader>a <Plug>AppendChar
-	end
+function! <SID>InsertChar(char, count)
+	return repeat(a:char, a:count)
+endfunction
+
+nnoremap <silent> <Plug>InsertChar :<C-U>exec "normal i".<SID>InsertChar(nr2char(getchar()), v:count1)<CR>
+
+if !exists('g:insert_char_no_default_mapping') || (g:insert_char_no_default_mapping == 0)
+	nmap <leader>i <Plug>InsertChar
+end
+
+function! <SID>AppendChar(char, count)
+	return repeat(a:char, a:count)
+endfunction
+
+nnoremap <silent> <Plug>AppendChar :<C-U>exec "normal a".<SID>AppendChar(nr2char(getchar()), v:count1)<CR>
+
+if !exists('g:append_char_no_default_mapping') || (g:append_char_no_default_mapping == 0)
+	nmap <leader>a <Plug>AppendChar
+end
 
 " <Ctrl-l> redraws the screen and removes any search highlighting.
 nnoremap <silent> <C-l> :nohl<CR><C-l>
@@ -231,22 +274,27 @@ nnoremap <silent> <C-l> :nohl<CR><C-l>
 " => Plugin-specific settings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Syntastic settings
- let g:syntastic_always_populate_loc_list = 1
- let g:syntastic_check_on_open = 1
- let g:syntastic_error_symbol = "✗"
- let g:syntastic_sh_checkers = ['shellcheck']
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_error_symbol = "✗"
+let g:syntastic_sh_checkers = ['shellcheck']
 
 " Easymotion settings
- " change ,,w to forward & backward
- nmap <Leader><Leader>w <Plug>(easymotion-bd-w)
- " forward in current line only
- map <Leader>l <Plug>(easymotion-lineforward)
- " down column only
- map <Leader>j <Plug>(easymotion-j)
- " up column only
- map <Leader>k <Plug>(easymotion-k)
- " backward in line only
- map <Leader>h <Plug>(easymotion-linebackward)
- " keep cursor column when JK motion
- let g:EasyMotion_startofline = 0
+" change ,,w to forward & backward
+nmap <Leader><Leader>w <Plug>(easymotion-bd-w)
+" <Leader>f{char} to move to {char}
+map  <Leader><Leader>f <Plug>(easymotion-bd-f2)
+nmap <Leader><Leader>f <Plug>(easymotion-overwin-f2)
+" forward in current line only
+map <Leader>l <Plug>(easymotion-lineforward)
+" down column only
+map <Leader>j <Plug>(easymotion-j)
+" up column only
+map <Leader>k <Plug>(easymotion-k)
+" backward in line only
+map <Leader>h <Plug>(easymotion-linebackward)
+" keep cursor column when JK motion
+let g:EasyMotion_startofline = 0
 
+" Airplane settings
+let g:airline#extensions#tabline#enabled = 1
