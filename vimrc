@@ -30,7 +30,8 @@ call plug#begin()
 	Plug 'tpope/vim-surround'
 	Plug 'vim-syntastic/syntastic'
 	Plug 'Lokaltog/vim-easymotion'
-	Plug 'vim-repeat'
+	Plug 'vim-airline/vim-airline'
+	Plug 'tpope/vim-repeat'
 	" Themes
 	Plug 'croaker/mustang-vim'
 	Plug 'altercation/vim-colors-solarized'
