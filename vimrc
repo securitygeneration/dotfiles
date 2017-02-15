@@ -1,5 +1,5 @@
 " VIM Configuration
-" SJ - 14 Feb 2017
+" SJ - 15 Feb 2017
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
@@ -8,7 +8,7 @@
 " to enjoy the features of Vim
 set nocompatible
 
- Auto-install vim-plug if not installed
+" Auto-install vim-plug if not installed
 if has('unix') || has('macunix')
 	if empty(glob('~/.vim/autoload/plug.vim'))
 		silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
