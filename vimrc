@@ -38,7 +38,7 @@ silent! call plug#begin()
 	Plug 'kien/ctrlp.vim'			 " fuzzy file/buffer/* finder
 	Plug 'vim-syntastic/syntastic'		 " syntax checker
 	Plug 'Lokaltog/vim-easymotion'		 " easy jumping around the screen
-	Plug 'vim-airline/vim-airline'		 " custom tab bar and baseline
+	" Plug 'vim-airline/vim-airline'		 " custom tab bar and baseline
 	Plug 'tpope/vim-surround'		 " easy add/remov/chang/ing of surrounding brackets/tags
 	Plug 'tpope/vim-repeat'			 " adds '.' repeat support for plugins
 	Plug 'tpope/vim-commentary'		 " easy commenting
@@ -52,9 +52,8 @@ silent! call plug#begin()
 	Plug 'flazz/vim-colorschemes'		 " mass-load color schemes
 call plug#end()
 
-" vim-airline needs this
-set laststatus=2
-
+" enable the moose!
+set mouse=a
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
@@ -270,6 +269,9 @@ end
 " <Ctrl-l> redraws the screen and removes any search highlighting.
 nnoremap <silent> <C-l> :nohl<CR><C-l>
 
+" Quickly edit/reload the vimrc file
+nmap <silent> <leader>ev :e $MYVIMRC<CR>
+nmap <silent> <leader>rv :so $MYVIMRC<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Plugin-specific settings
