@@ -1,11 +1,10 @@
 " VIM Configuration
-" SJ - 15 Feb 2017
+" SJ - 17 Feb 2017
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Cancel the compatibility with Vi. Essential if you want
-" to enjoy the features of Vim
+" Cancel the compatibility with Vi
 set nocompatible
 
 " Auto-install vim-plug if not installed
@@ -45,6 +44,9 @@ silent! call plug#begin()
 	Plug 'tpope/vim-endwise'		 " auto-adds closing tags (e.g. endif, etc)
 	Plug 'raimondi/delimitmate'		 " auto-adds closing quote/brackets
 	Plug 'nathanaelkane/vim-indent-guides'	 " visual indentation guides (<Leader>ig)
+	Plug 'joeytwiddle/sexy_scroller.vim'	 " Smooth scrolling
+	Plug 'terryma/vim-multiple-cursors'	 " Sublime-text style multiple cursors
+	" Plug 'dkarter/bullets.vim'		 " auto-bulleting
 	" Themes
 	" Plug 'altercation/vim-colors-solarized'
 	" Plug 'croaker/mustang-vim'
@@ -311,3 +313,17 @@ let g:EasyMotion_startofline = 0
 " Airplane settings
 let g:airline#extensions#tabline#enabled = 1
 set laststatus=2
+
+" Bullets.vim
+let g:bullets_enabled_file_types = [
+    \ 'markdown',
+    \ 'text',
+    \ 'gitcommit',
+    \ 'scratch'
+    \]
+
+" Sexy_scroller
+:let g:SexyScroller_ScrollTime = 20
+:let g:SexyScroller_EasingStyle = 1
+:let g:SexyScroller_CursorTime = 5
+:let g:SexyScroller_MaxTime = 500
