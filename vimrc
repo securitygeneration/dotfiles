@@ -46,7 +46,7 @@ silent! call plug#begin()
 	Plug 'nathanaelkane/vim-indent-guides'	 " visual indentation guides (<Leader>ig)
 	Plug 'joeytwiddle/sexy_scroller.vim'	 " Smooth scrolling
 	Plug 'terryma/vim-multiple-cursors'	 " Sublime-text style multiple cursors
-	" Plug 'dkarter/bullets.vim'		 " auto-bulleting
+	Plug 'dkarter/bullets.vim'		 " auto-bulleting
 	" Themes
 	" Plug 'altercation/vim-colors-solarized'
 	" Plug 'croaker/mustang-vim'
