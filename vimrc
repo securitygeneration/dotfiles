@@ -46,7 +46,9 @@ silent! call plug#begin()
 	Plug 'nathanaelkane/vim-indent-guides'	 " visual indentation guides (<Leader>ig)
 	Plug 'joeytwiddle/sexy_scroller.vim'	 " Smooth scrolling
 	Plug 'terryma/vim-multiple-cursors'	 " Sublime-text style multiple cursors
-	" Plug 'dkarter/bullets.vim'		 " auto-bulleting
+	Plug 'dkarter/bullets.vim'		 " auto-bulleting
+	Plug 'vim-scripts/ScrollColors'		 " scroll through color schemes with :SCROLLCOLOR
+	Plug 'lifepillar/vim-cheat40'
 	" Themes
 	" Plug 'altercation/vim-colors-solarized'
 	" Plug 'croaker/mustang-vim'
@@ -123,6 +125,9 @@ set lazyredraw
 
 " Autoindent to match adjacent lines
 set autoindent
+
+" Make line wraps more evident
+set showbreak=↪
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Fonts
@@ -278,7 +283,7 @@ if !exists('g:append_char_no_default_mapping') || (g:append_char_no_default_mapp
 end
 
 " ,/ redraws the screen and removes any search highlighting.
-nnoremap <silent> ,/ :nohlsearch<CR>
+nnoremap <silent> <leader>/ :nohlsearch<CR>
 
 " Quickly edit/reload the vimrc file
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
@@ -315,15 +320,10 @@ let g:airline#extensions#tabline#enabled = 1
 set laststatus=2
 
 " Bullets.vim
-let g:bullets_enabled_file_types = [
-    \ 'markdown',
-    \ 'text',
-    \ 'gitcommit',
-    \ 'scratch'
-    \]
+let g:bullets_enabled_file_types = ['markdown', 'text', 'gitcommit', 'scratch', '']
 
 " Sexy_scroller
-:let g:SexyScroller_ScrollTime = 20
+:let g:SexyScroller_ScrollTime = 15
 :let g:SexyScroller_EasingStyle = 1
 :let g:SexyScroller_CursorTime = 5
 :let g:SexyScroller_MaxTime = 500
