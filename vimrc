@@ -1,5 +1,5 @@
 " VIM Configuration
-" SJ - 17 Feb 2017
+" SJ - 21 Feb 2017
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
@@ -40,15 +40,16 @@ silent! call plug#begin()
 	Plug 'vim-airline/vim-airline'		 " custom tab bar and baseline
 	Plug 'tpope/vim-surround'		 " easy add/remov/chang/ing of surrounding brackets/tags
 	Plug 'tpope/vim-repeat'			 " adds '.' repeat support for plugins
-	Plug 'tpope/vim-commentary'		 " easy commenting
+	Plug 'tpope/vim-commentary'		 " easy commenting: <leader>gcc to toggle
 	Plug 'tpope/vim-endwise'		 " auto-adds closing tags (e.g. endif, etc)
 	Plug 'raimondi/delimitmate'		 " auto-adds closing quote/brackets
 	Plug 'nathanaelkane/vim-indent-guides'	 " visual indentation guides (<Leader>ig)
 	Plug 'joeytwiddle/sexy_scroller.vim'	 " Smooth scrolling
 	Plug 'terryma/vim-multiple-cursors'	 " Sublime-text style multiple cursors
-	Plug 'dkarter/bullets.vim'		 " auto-bulleting
+	Plug 'dkarter/bullets.vim'		 " auto-bulleting/numbering lists
 	Plug 'vim-scripts/ScrollColors'		 " scroll through color schemes with :SCROLLCOLOR
-	Plug 'lifepillar/vim-cheat40'
+	Plug 'jkramer/vim-checkbox'		 " checkboxes: create '[ ]' complete with <leader>tt
+	Plug 'lifepillar/vim-cheat40'		 " Vim Cheat Sheet: <leader>? 
 	" Themes
 	" Plug 'altercation/vim-colors-solarized'
 	" Plug 'croaker/mustang-vim'
@@ -320,7 +321,8 @@ let g:airline#extensions#tabline#enabled = 1
 set laststatus=2
 
 " Bullets.vim
-let g:bullets_enabled_file_types = ['markdown', 'text', 'gitcommit', 'scratch', '']
+let g:bullets_enabled_file_types = ['markdown', 'text', 'gitcommit', 'scratch']
+let g:bullets_enable_in_empty_buffers = 1
 
 " Sexy_scroller
 :let g:SexyScroller_ScrollTime = 15
