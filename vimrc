@@ -291,6 +291,10 @@ nnoremap <silent> <leader>/ :nohlsearch<CR>
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
 nmap <silent> <leader>rv :so $MYVIMRC<CR>
 
+" Create a checkbox
+imap <leader>cb [ ] 
+nmap <leader>cb I[ ] <Esc>
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Plugin-specific settings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
