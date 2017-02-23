@@ -1,5 +1,5 @@
 " VIM Configuration
-" SJ - 21 Feb 2017
+" SJ - 23 Feb 2017
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
@@ -50,6 +50,7 @@ silent! call plug#begin()
 	Plug 'vim-scripts/ScrollColors'		 " scroll through color schemes with :SCROLLCOLOR
 	Plug 'jkramer/vim-checkbox'		 " checkboxes: create '[ ]' complete with <leader>tt
 	Plug 'lifepillar/vim-cheat40'		 " Vim Cheat Sheet: <leader>? 
+	Plug 'airblade/vim-gitgutter'		 " Git diff in gutter: <leader>gd to toggle, ]c & [c for next and previous change
 	" Themes
 	" Plug 'altercation/vim-colors-solarized'
 	" Plug 'croaker/mustang-vim'
@@ -329,3 +330,6 @@ let g:bullets_enable_in_empty_buffers = 1
 :let g:SexyScroller_EasingStyle = 1
 :let g:SexyScroller_CursorTime = 5
 :let g:SexyScroller_MaxTime = 500
+
+" Gitgutter
+map <leader>gd <Plug>GitGutterToggle
