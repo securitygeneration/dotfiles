@@ -1,5 +1,5 @@
 " VIM Configuration
-" SJ - 23 Feb 2017
+" SJ - 27 Feb 2017
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
@@ -49,8 +49,9 @@ silent! call plug#begin()
 	Plug 'dkarter/bullets.vim'		 " auto-bulleting/numbering lists
 	Plug 'vim-scripts/ScrollColors'		 " scroll through color schemes with :SCROLLCOLOR
 	Plug 'jkramer/vim-checkbox'		 " checkboxes: create '[ ]' complete with <leader>tt
-	Plug 'lifepillar/vim-cheat40'		 " Vim Cheat Sheet: <leader>? 
+	Plug 'lifepillar/vim-cheat40'		 " Vim Cheat Sheet: <leader>?
 	Plug 'airblade/vim-gitgutter'		 " Git diff in gutter: <leader>gd to toggle, ]c & [c for next and previous change
+	" Plug 'Valloric/YouCompleteMe'		 " Tab completion
 	" Themes
 	" Plug 'altercation/vim-colors-solarized'
 	" Plug 'croaker/mustang-vim'
@@ -112,7 +113,7 @@ if has("gui_running")
 	" GUI is running or is about to start.
 	" Maximize gvim window (for an alternative on Windows, see simalt below).
 	set lines=999 columns=150
-else
+elseif !has('nvim')
 	" This is console Vim.
 	if exists("+lines")
 		set lines=50
@@ -292,7 +293,7 @@ nmap <silent> <leader>ev :e $MYVIMRC<CR>
 nmap <silent> <leader>rv :so $MYVIMRC<CR>
 
 " Create a checkbox
-imap <leader>cb [ ] 
+imap <leader>cb [ ]
 nmap <leader>cb I[ ] <Esc>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
