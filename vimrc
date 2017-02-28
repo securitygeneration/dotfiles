@@ -51,7 +51,8 @@ silent! call plug#begin()
 	Plug 'jkramer/vim-checkbox'		 " checkboxes: create '[ ]' complete with <leader>tt
 	Plug 'lifepillar/vim-cheat40'		 " Vim Cheat Sheet: <leader>?
 	Plug 'airblade/vim-gitgutter'		 " Git diff in gutter: <leader>gd to toggle, ]c & [c for next and previous change
-	" Plug 'Valloric/YouCompleteMe'		 " Tab completion
+	Plug 'Valloric/YouCompleteMe'		 " Tab completion
+	Plug 'tmhedberg/SimpylFold'		 " Python folding
 	" Themes
 	" Plug 'altercation/vim-colors-solarized'
 	" Plug 'croaker/mustang-vim'
@@ -76,9 +77,9 @@ set title                 " Update the title of your window or your terminal
 set number                " Display line numbers
 set ruler                 " Display cursor position
 set wrap                  " Wrap lines when they are too long
+set linebreak		  " Don't truncate words on wrap
 
-set scrolloff=3           " Display at least 3 lines around you cursor
-" (for scrolling)
+set scrolloff=3           " Display at least 3 lines around you cursor (for scrolling)
 
 set guioptions=T          " Enable the toolbar
 
@@ -139,7 +140,7 @@ set showbreak=↪
 syntax enable
 
 " Set theme - solarized > mustang > desert
-if has("gui_running")
+if has("gui_running") || has("nvim")
 	set t_Co=256
 	set background=dark
 	try
@@ -185,41 +186,19 @@ endif
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Movement/editing mappings
+" => General key mappings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" With a map leader it's possible to do extra key combinations
+"
+" Map Leader (,)
 let mapleader = ","
 let g:mapleader = ","
 
 " Map ; to : for even moar efficiency!
 nnoremap ; :
 
-" Buffer navigation
-nnoremap <C-S-tab> :bprevious<CR>
-nnoremap <leader>H :bprevious<CR>
-nnoremap <C-tab>   :bnext<CR>
-nnoremap <leader>L :bnext<CR>
-
-nnoremap <leader>1 :b1<CR>
-nnoremap <leader>2 :b2<CR>
-nnoremap <leader>3 :b3<CR>
-nnoremap <leader>4 :b4<CR>
-nnoremap <leader>5 :b5<CR>
-nnoremap <leader>6 :b6<CR>
-nnoremap <leader>7 :b7<CR>
-nnoremap <leader>8 :b8<CR>
-nnoremap <leader>9 :b9<CR>
-
 " Window splitting
 nnoremap <leader>v <C-w>v<C-w>l
 nnoremap <leader>s <C-w>s
-
-" Easy window navigation
-map <C-h> <C-w>h
-map <C-j> <C-w>j
-map <C-k> <C-w>k
-map <C-l> <C-w>l
 
 " Fast saving
 nnoremap <leader>w :w!<cr>
@@ -231,7 +210,19 @@ cmap w!! w !sudo tee % >/dev/null
 " *nix-only (requires diff)
 command! Diff w !diff % -
 
-" Disabling directional keys
+" ,/ redraws the screen and removes any search highlighting.
+nnoremap <silent> <leader>/ :nohlsearch<CR>
+
+" Quickly edit/reload the vimrc file
+nmap <silent> <leader>ev :e $MYVIMRC<CR>
+nmap <silent> <leader>rv :so $MYVIMRC<CR>
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Movement/editing mappings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"
+" Disabling arrow keys
 map <up> <nop>
 map <down> <nop>
 map <left> <nop>
@@ -261,6 +252,30 @@ vnoremap <A-k> :m '<-2<CR>gv=gv
 nnoremap <leader><CR> O<Esc>j
 nnoremap <CR> o<Esc>k
 
+" Neovim-specific bindings
+if has('nvim')
+	" Map ESC for Terminal mode (Neovim)
+	tnoremap <Esc> <C-\><C-n>
+	tnoremap jk <C-\><C-n>
+	" Map Alt-dir to move windows
+	tnoremap <C-h> <C-\><C-n><C-w>h
+	tnoremap <C-j> <C-\><C-n><C-w>j
+	tnoremap <C-k> <C-\><C-n><C-w>k
+	tnoremap <C-l> <C-\><C-n><C-w>l
+endif
+
+" Buffer navigation
+nnoremap <C-S-tab> :bprevious<CR>
+nnoremap <leader>H :bprevious<CR>
+nnoremap <C-tab>   :bnext<CR>
+nnoremap <leader>L :bnext<CR>
+
+" Easy window navigation Ctrl-HJKL
+map <C-h> <C-w>h
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-l> <C-w>l
+
 " Map <Leader>i and <Leader>a to insert/append a single character
 "   Mappings below are simpler, but can't be repeated with '.'
 "    nnoremap <leader>i i_<Esc>r
@@ -285,16 +300,13 @@ if !exists('g:append_char_no_default_mapping') || (g:append_char_no_default_mapp
 	nmap <leader>a <Plug>AppendChar
 end
 
-" ,/ redraws the screen and removes any search highlighting.
-nnoremap <silent> <leader>/ :nohlsearch<CR>
-
-" Quickly edit/reload the vimrc file
-nmap <silent> <leader>ev :e $MYVIMRC<CR>
-nmap <silent> <leader>rv :so $MYVIMRC<CR>
-
 " Create a checkbox
 imap <leader>cb [ ]
 nmap <leader>cb I[ ] <Esc>
+
+" Activate folding - disabled
+" command! Fold set foldmethod=indent
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Plugin-specific settings
@@ -309,7 +321,6 @@ let g:syntastic_sh_checkers = ['shellcheck']
 " change ,,w to forward & backward
 nmap <Leader><Leader>w <Plug>(easymotion-bd-w)
 " <Leader>f{char} to move to {char}
-map  <Leader><Leader>f <Plug>(easymotion-bd-f2)
 nmap <Leader><Leader>f <Plug>(easymotion-overwin-f2)
 " forward in current line only
 map <Leader>l <Plug>(easymotion-lineforward)
@@ -338,3 +349,8 @@ let g:bullets_enable_in_empty_buffers = 1
 
 " Gitgutter
 map <leader>gd <Plug>GitGutterToggle
+
+" Python folding
+" Show docstring preview
+let g:SimpylFold_docstring_preview = 1
+let g:SimpylFold_fold_docstring = 0
