@@ -7,11 +7,17 @@
 " Cancel the compatibility with Vi
 set nocompatible
 
+" Set editor root depending on vim/nvim
+if has('nvim')
+    let s:editor_root=expand("~/.config/nvim")
+else
+    let s:editor_root=expand("~/.vim")
+endif
+
 " Auto-install vim-plug if not installed
 if has('unix') || has('macunix')
-	if empty(glob('~/.vim/autoload/plug.vim'))
-		silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-					\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+	if empty(glob(s:editor_root . '/autoload/plug.vim'))
+		silent execute "!curl -fLo" . s:editor_root . "/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
 		silent autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 	endif
 elseif has('win32')
@@ -58,6 +64,7 @@ silent! call plug#begin()
 	" Plug 'croaker/mustang-vim'
 	" Plug 'tomasr/molokai'
 	Plug 'flazz/vim-colorschemes'		 " mass-load color schemes
+	Plug 'frankier/neovim-colors-solarized-truecolor-only' " Solarized for nvim
 call plug#end()
 
 " enable the moose!
@@ -140,6 +147,7 @@ set showbreak=↪
 syntax enable
 
 " Set theme - solarized > mustang > desert
+set termguicolors
 if has("gui_running") || has("nvim")
 	set t_Co=256
 	set background=dark
