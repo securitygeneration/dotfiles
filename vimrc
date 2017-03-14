@@ -147,8 +147,8 @@ set showbreak=↪
 syntax enable
 
 " Set theme - solarized > mustang > desert
-set termguicolors
 if has("gui_running") || has("nvim")
+	set termguicolors
 	set t_Co=256
 	set background=dark
 	try
