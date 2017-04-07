@@ -59,6 +59,7 @@ silent! call plug#begin()
 	Plug 'airblade/vim-gitgutter'		 " Git diff in gutter: <leader>gd to toggle, ]c & [c for next and previous change
 	Plug 'Valloric/YouCompleteMe'		 " Tab completion
 	Plug 'tmhedberg/SimpylFold'		 " Python folding
+	Plug 'tpope/vim-fugitive'		 " Git wrapper
 	" Themes
 	" Plug 'altercation/vim-colors-solarized'
 	" Plug 'croaker/mustang-vim'
